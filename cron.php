@@ -32,7 +32,7 @@ foreach($config['locations'] as $location) {
         print_r($result);
         echo "\n";
         send_notification('', 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest']);
-        sleep(15);
+        sleep(30);
 
       } else {
         // No phone number was found!
