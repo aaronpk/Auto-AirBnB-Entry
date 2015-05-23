@@ -1,0 +1,10 @@
+locations:
+- name: The Loft
+  ical: https://www.airbnb.com/calendar/ical/xxxxxxx.ics?s=xxxxxxxxxxxxxxxxxxxxxx
+  smartthings_endpoint: https://graph.api.smartthings.com/api/smartapps/installations/xxxxxxxxx/lock/code
+  smartthings_token: xxxxxxxxxxx
+  code_index_0: 3
+  code_index_1: 4
+  default_secret_code: 1111
+prowl_key: xxxxxxx
+irc_notify: "http://zenircbot.example.com:11001/channel/%23debug"

@@ -40,6 +40,14 @@ foreach($config['locations'] as $location) {
       }
     }
   }
+
+  // If only one code was set today, disable the other one
+  if($codeindex == 1) {
+    $result = set_door_code($location, $location['default_secret_code'], $codeindex);
+    print_r($result);
+    echo "\n";
+  }
+
 }
 
 

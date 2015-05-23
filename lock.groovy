@@ -71,6 +71,7 @@ def updateCode() {
 def codeReportEvent(evt) {
   log.debug "Got the code report event"
   log.debug evt.jsonData
+  /*
   sendPostRequest([
     type: "CodeReport",
     locationId: evt.locationId,
@@ -79,16 +80,19 @@ def codeReportEvent(evt) {
     num: evt.value,
     code: evt.jsonData.code
   ])
+  */
   sendPush(location.name + " door code was set to " + evt.jsonData.code)
 }
 
 def codeChangedEvent(evt) {
   log.debug "Code changed"
   log.debug evt.value
+  /*
   sendPostRequest([
     type: "CodeChanged",
     num: evt.value
   ])
+  */
 }
 
 def sendPostRequest(data) {

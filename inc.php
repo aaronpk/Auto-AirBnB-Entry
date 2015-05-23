@@ -47,6 +47,9 @@ function set_door_code($location, $code, $index) {
 function send_prowl_notification($event, $message) {
   global $config;
 
+  if(!$config['prowl_key'])
+    return;
+
   $data = [
     'apikey' => $config['prowl_key'],
     'application' => 'AirBnB',
@@ -63,6 +66,9 @@ function send_prowl_notification($event, $message) {
 
 function send_irc_notification($event, $message) {
   global $config;
+
+  if(!$config['irc_notify'])
+    return;
 
   $data = [
     'message' => '[AirBnB] ' . ($event ? $event . ': ' : '') . $message
