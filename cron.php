@@ -24,6 +24,7 @@ foreach($config['locations'] as $location) {
         $code = substr($details['phone'], -4);
         $result = set_door_code($location, $details['phone']);
         print_r($result);
+        echo "\n";
         send_notification('', 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest']);
 
       } else {
