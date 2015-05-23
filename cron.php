@@ -15,17 +15,24 @@ foreach($config['locations'] as $location) {
   $caldata = explode("\n", $calinput);
   $ical = new ICal($caldata);
   $events = $ical->events();
+
+  $codeindex = 0;
+
   foreach($events as $event) {
     // Look for any events starting today
-    if($event['DTSTART'] == date('Ymd')) {
+    if($event['DTSTART'] == date('Ymd') || $event['DTEND'] == date('Ymd')) {
       $details = reservation_details($event);
-      print_r($details);
+
       if($details['phone']) {
         $code = substr($details['phone'], -4);
-        $result = set_door_code($location, $details['phone']);
+        $index = $location['code_index_'.$codeindex];
+        $codeindex++;
+        $result = set_door_code($location, $code, $index);
+        echo "Setting code $index to $code\n";
         print_r($result);
         echo "\n";
         send_notification('', 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest']);
+        sleep(15);
 
       } else {
         // No phone number was found!

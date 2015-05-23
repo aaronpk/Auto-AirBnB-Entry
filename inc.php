@@ -27,11 +27,9 @@ function reservation_details($event) {
   return $result;
 }
 
-function set_door_code($location, $phone) {
-  $code = substr($phone, -4);
-
+function set_door_code($location, $code, $index) {
   $data = [
-    'num' => $location['code_index'],
+    'num' => $index,
     'code' => $code
   ];
 
