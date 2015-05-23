@@ -1,0 +1,12 @@
+{
+    "name": "aaronpk/airbnb-lock",
+    "require": {
+        "johngrogg/ics-parser": "*"
+    },
+    "authors": [
+        {
+            "name": "Aaron Parecki",
+            "email": "aaron@parecki.com"
+        }
+    ]
+}
