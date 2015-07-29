@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 require 'inc.php';
+chdir(dirname(__FILE__));
 
 $config = yaml_parse(file_get_contents('config.yml'));
 
@@ -20,7 +21,7 @@ foreach($config['locations'] as $location) {
 
   foreach($events as $event) {
     // Look for any events starting today
-    if($event['DTSTART'] == date('Ymd') || $event['DTEND'] == date('Ymd')) {
+    if($event['DTSTART'] == date('Ymd') /* || $event['DTEND'] == date('Ymd') */) {
       $details = reservation_details($event);
 
       if($details['phone']) {
@@ -31,15 +32,20 @@ foreach($config['locations'] as $location) {
         echo "Setting code $index to $code\n";
         print_r($result);
         echo "\n";
-        send_notification('', 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest']);
+        $notification = 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest'];
+        send_irc_notification('', $notification);
+        send_prowl_notification('', $notification);
+        // send_sms_notification('', $notification);
         sleep(15);
 
       } else {
         // No phone number was found!
-        send_notification('Error', 'No phone number was found for today\'s reservation (' . $details['guest'] . ' at ' . $details['location'] . ')');
+        send_irc_notification('', 'No phone number was found for ' . $details['guest'] . ' (at ' . $location['name'] . ')');
       }
     }
   }
+  
+  echo "Done\n\n";
 }
 
 

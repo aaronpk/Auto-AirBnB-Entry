@@ -75,8 +75,17 @@ function send_irc_notification($event, $message) {
   $response = curl_exec($ch);
 }
 
+function send_sms_notification($event, $message) {
+  global $config;
+
+  foreach($config['email']['recipients'] as $recipient)
+    mail($recipient, $event, $message,
+      "From: ".$config['from']."\r\nReply-To: ".$config['from']."", '-f'.$config['from']);
+}
+
 function send_notification($event, $message) {
   send_irc_notification($event, $message);
   send_prowl_notification($event, $message);
+  send_sms_notification($event, $message);
 }
 
