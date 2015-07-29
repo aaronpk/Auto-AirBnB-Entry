@@ -32,11 +32,12 @@ foreach($config['locations'] as $location) {
         echo "Setting code $index to $code\n";
         print_r($result);
         echo "\n";
+
         $notification = 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest'];
         send_irc_notification('', $notification);
         send_prowl_notification('', $notification);
         // send_sms_notification('', $notification);
-        sleep(15);
+        sleep(30);
 
       } else {
         // No phone number was found!

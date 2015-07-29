@@ -17,7 +17,7 @@ definition(
     name: "Change the Lock",
     namespace: "pk.aaron",
     author: "Aaron Parecki",
-    description: "Updates the lock code",
+    description: "Creates an HTTP API to update the codes for a lock",
     category: "",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
@@ -44,9 +44,8 @@ def updated() {
 }
 
 def initialize() {
-  // TODO: subscribe to attributes, devices, locations, etc.
-    subscribe(doorlock, "codeReport", codeReportEvent);
-    subscribe(doorlock, "codeChanged", codeChangedEvent);
+  subscribe(doorlock, "codeReport", codeReportEvent);
+  subscribe(doorlock, "codeChanged", codeChangedEvent);
 }
 
 mappings {
@@ -72,6 +71,7 @@ def updateCode() {
 def codeReportEvent(evt) {
   log.debug "Got the code report event"
   log.debug evt.jsonData
+  /*
   sendPostRequest([
     type: "CodeReport",
     locationId: evt.locationId,
@@ -80,16 +80,19 @@ def codeReportEvent(evt) {
     num: evt.value,
     code: evt.jsonData.code
   ])
+  */
   sendPush(location.name + " door code was set to " + evt.jsonData.code)
 }
 
 def codeChangedEvent(evt) {
   log.debug "Code changed"
   log.debug evt.value
+  /*
   sendPostRequest([
     type: "CodeChanged",
     num: evt.value
   ])
+  */
 }
 
 def sendPostRequest(data) {
