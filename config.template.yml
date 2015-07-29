@@ -8,3 +8,7 @@ locations:
   default_secret_code: 1111
 prowl_key: xxxxxxx
 irc_notify: "http://zenircbot.example.com:11001/channel/%23debug"
+email:
+  from: "door@example.com"
+  recipients:
+  - "5035551212@vzwpix.com"
