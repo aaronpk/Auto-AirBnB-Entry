@@ -71,13 +71,17 @@ function send_irc_notification($event, $message) {
     return;
 
   $data = [
-    'message' => '[AirBnB] ' . ($event ? $event . ': ' : '') . $message
+    'content' => '[AirBnB] ' . ($event ? $event . ': ' : '') . $message,
+    'channel' => $config['irc_channel']
   ];
 
   $ch = curl_init($config['irc_notify']);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_POST, true);
   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Authorization: Bearer '.$config['irc_token']
+  ]);
   $response = curl_exec($ch);
 }
 
@@ -86,7 +90,7 @@ function send_sms_notification($event, $message) {
 
   foreach($config['email']['recipients'] as $recipient)
     mail($recipient, $event, $message,
-      "From: ".$config['from']."\r\nReply-To: ".$config['from']."", '-f'.$config['from']);
+      "From: ".$config['email']['from']."\r\nReply-To: ".$config['email']['from']."", '-f'.$config['email']['from']);
 }
 
 function send_notification($event, $message) {
