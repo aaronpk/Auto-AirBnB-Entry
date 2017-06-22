@@ -10,8 +10,12 @@ $input = json_decode(file_get_contents('php://input'));
 #file_put_contents(dirname(__FILE__).'/logs/'.date('Ymd-His').'.'.round($m*1000000).'.txt', json_encode($input, JSON_PRETTY_PRINT));
 
 if(property_exists($input, type) && $input->type == 'CodeReport') {
-  $message = $input->locationName . ' door code was set to ' . $input->code; // . ' (index ' . $input->num . ')';
-  send_irc_notification('', $message);
+  if($input->code) {
+    $message = (property_exists($input, 'doorName') ? $input->doorName : $input->locationName) . ' code was set to ' . $input->code;
+  } else {
+	$message = $input->descriptionText;
+  }
+  send_irc_notification('', $message . ' (code ' . $input->num . ') ' . json_encode($input));
   send_prowl_notification('', $message);
   send_sms_notification('', $message);
 }
