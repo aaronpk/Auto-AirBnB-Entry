@@ -5,6 +5,8 @@ chdir(dirname(__FILE__));
 
 $config = yaml_parse(file_get_contents('config.yml'));
 
+echo date('Y-m-d H:i:s')."\n";
+
 foreach($config['locations'] as $location) {
   echo "Processing location: " . $location['name'] . "\n";
 
@@ -33,7 +35,16 @@ foreach($config['locations'] as $location) {
         print_r($result);
         echo "\n";
 
-        $notification = 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest'];
+        try {
+          $response = json_decode($result);
+          if(property_exists($response,'code')) {
+            $notification = 'Setting the door code for ' . $details['location'] . ' to ' . $code . ' for ' . $details['guest'];
+          } else {
+            $notification = "Failed to set the door code for ".$location['name'].'. SmartThings did not acknowledge the code';
+          }
+        } catch(Exception $e) {
+            $notification = "Failed to set the door code for ".$location['name'].': '.$e->getMessage();
+        }
         send_irc_notification('', $notification);
         send_prowl_notification('', $notification);
         // send_sms_notification('', $notification);
