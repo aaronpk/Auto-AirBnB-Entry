@@ -1,3 +1,7 @@
+DEPRECATED: AirBnB stopped providing the last 4 digits of the guest's phone number in the calendar feed in 2019 so this code no longer works.
+
+
+
 Auto AirBnB Entry
 =================
 
@@ -8,7 +12,7 @@ Requirements
 ------------
 
 * One or more AirBnB listings that you manage, you'll need the iCal URLs for the bookings
-* A SmartThings hub, with a connected door lock for each listing
+* A Schlage FE595 door lock connected to a SmartThings hub for each AirBnB
 
 
 How it Works
